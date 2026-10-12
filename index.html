@@ -677,7 +677,7 @@ body.tb-on .burbuja{display:none}
           <span><i></i><span>Regalo al festejado</span></span>
         </div>
         <ul class="eventos" aria-label="Eventos que atendemos">
-          <li>XV años</li><li>Bodas</li><li>Cumpleaños</li><li>Fiestas infantiles</li><li>Bautizos</li><li>Baby shower</li><li>Empresas</li>
+          <li>XV años</li><li>Bodas</li><li>Cumpleaños</li><li>Fiestas infantiles</li><li>Bautizos</li><li>Baby shower</li><li>Reuniones</li><li>Empresas</li>
         </ul>
       </div>
 
@@ -1331,10 +1331,10 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var r,n,i,a,
    en las secciones 1 y 2. Lo marcado "POR CONFIRMAR" falta confirmarlo con la clienta.
    ############################################################################ */
 const CONFIG = {
-  modo: "propuesta",            // "propuesta" = cinta + cuestionario de revisión | "final" = página limpia
+  modo: "final",                // "propuesta" = cinta + cuestionario de revisión | "final" = página limpia
   nombre: "OBE! mix",
-  whatsapp: "522211870611",     // POR CONFIRMAR con la clienta: a dónde llegan las cotizaciones
-  whatsappAlterno: "522228610165",
+  whatsapp: "522228610165",     // confirmado por la clienta: aquí llegan las cotizaciones (222 861 0165)
+  whatsappAlterno: "522211870611",
   instagram: "obemix.mx",
   facebook: "", tiktok: "",     // vacíos = se ocultan
   waNegoboost: "522221018655",  // a dónde llegan las respuestas del cuestionario
@@ -1374,7 +1374,7 @@ const REGLAS = {
 /* precio: null = "Precio por confirmar" en pantalla, PDF y WhatsApp (no suma al total) */
 const EXTRAS = [
   { id: "tiempo", nombre: "Tiempo adicional de servicio", detalle: "Se solicita con anticipación para contemplar más producto", cobro: "por hora", precio: null, max: 2 },  // POR CONFIRMAR precio
-  { id: "vasos",  nombre: "Vasos personalizados", detalle: "Con la temática de tu evento", cobro: "por evento", precio: null, pideTema: true }  // POR CONFIRMAR precio
+  { id: "vasos",  nombre: "Vasos personalizados", detalle: "Envía tu diseño en el tiempo y tamaño establecido", cobro: "por evento", precio: 0, gratis: true, pideTema: true }  // sin costo extra (pedido por la clienta)
 ];
 
 const INCLUYE = [
@@ -1433,7 +1433,7 @@ const PRODUCTOS = [
 const MEZCLA_SUGERIDA = ["jicama", "pepino", "panditas", "aros-durazno", "lombriz-acida", "manguitos",
   "cacahuate-japones", "cacahuate-enchilado", "banderillas", "papas", "churros", "totis"];
 
-const EVENTOS = ["XV años", "Boda", "Cumpleaños", "Fiesta infantil", "Bautizo / Primera comunión", "Baby shower", "Empresa", "Otro"];
+const EVENTOS = ["XV años", "Boda", "Cumpleaños", "Fiesta infantil", "Bautizo / Primera comunión", "Baby shower", "Reuniones", "Empresa", "Otro"];
 
 /* Fotos de "Nuestra barra" (las imágenes están en IMG, al final del archivo) */
 const GALERIA = [
@@ -1457,7 +1457,7 @@ const FAQ = [
   { q: "¿Cómo elijo los snacks?", a: "Escoges " + REGLAS.productosPorBarra + " productos de nuestra lista, uno por charola. Si no sabes cuáles, usa “Sorpréndeme” y te armamos una mezcla balanceada." },
   { q: "¿Cuánto tiempo dura el servicio?", a: REGLAS.horasIncluidas + " horas. Si necesitas más tiempo, pídelo con anticipación para contemplar más producto; tiene un costo extra." },
   { q: "¿Cómo aparto mi fecha?", a: "Con el " + REGLAS.anticipoPct + "% de anticipo. El otro " + (100 - REGLAS.anticipoPct) + "% se liquida " + REGLAS.liquidarHorasAntes + " horas antes de tu evento." },
-  { q: "¿Pueden personalizar los vasos?", a: "Sí, con la temática de tu evento. Tiene un costo extra; pídelos al cotizar." },
+  { q: "¿Pueden personalizar los vasos?", a: "Sí. Si gustas personalizar tus vasos, envía tu diseño sin costo extra, en el tiempo y tamaño establecido." },
   { q: "¿Qué es el regalo al festejado?", a: "Un detalle de " + CONFIG.nombre + " para quien celebra." }   // POR CONFIRMAR qué es el regalo
 ];
 
@@ -1601,7 +1601,7 @@ function calcular(est){
       detalle: tema ? "Tema: " + tema : x.detalle,
       cantTxt: porHora ? plural(cant, "hora", "horas") : "",
       importe: conPrecio ? x.precio * cant : null,
-      calculo: conPrecio ? money(x.precio) + " " + x.cobro + (porHora ? " x " + cant : "") : (porHora ? plural(cant, "hora", "horas") : "Por evento")
+      calculo: x.gratis ? "Sin costo" : conPrecio ? money(x.precio) + " " + x.cobro + (porHora ? " x " + cant : "") : (porHora ? plural(cant, "hora", "horas") : "Por evento")
     };
   }).filter(Boolean);
   const extrasConPrecio = extras.filter(x => x.importe != null).reduce((s, x) => s + x.importe, 0);
@@ -1731,8 +1731,8 @@ function renderSecciones(){
   $("#ahorroTxt").textContent = "Entre más invitados, menos pagan por persona: " + listaY(ej) + ".";
 
   $("#incGrid").innerHTML = INCLUYE.map((t, i) => '<div class="inc reveal"><div class="ic">' + ic(INCLUYE_ICONOS[i] || "ic-check", "") + "</div><b>" + esc(t) + "</b></div>").join("") +
-    '<div class="inc extra reveal"><div class="ic">' + ic("ic-vaso", "") + "</div><div><b>Extras con costo</b><p>" +
-    esc(listaY(EXTRAS.map((x, i) => i === 0 ? x.nombre.replace(/ de servicio$/, "") : x.nombre.toLowerCase())) + " con tu temática.") + "</p></div></div>";
+    '<div class="inc extra reveal"><div class="ic">' + ic("ic-vaso", "") + "</div><div><b>Extras</b><p>" +
+    esc("Tiempo adicional (con costo, se pide con anticipación). Vasos personalizados sin costo extra: envía tu diseño en el tiempo y tamaño establecido.") + "</p></div></div>";
 
   $("#faq").innerHTML = FAQ.map(f => "<details><summary>" + esc(f.q) + "</summary><p>" + esc(f.a) + "</p></details>").join("");
 }
@@ -1848,6 +1848,7 @@ function panel2(c){
     nav(true, "Siguiente");
 }
 function precioExtraTxt(x){
+  if (x.gratis) return "Sin costo extra";
   if (typeof x.precio === "number" && isFinite(x.precio)) return money(x.precio) + " " + x.cobro;
   return x.pideTema ? "Se cotiza según diseño" : "Precio por confirmar";
 }
@@ -1910,7 +1911,7 @@ function ticketHTML(c){
   // extras
   c.extras.forEach(x => {
     h += '<div class="t-row"><div class="tt"><b>' + esc(x.nombre) + "</b><small>" + esc([x.cantTxt, x.detalle].filter(Boolean).join(" · ")) + "</small></div>" +
-      '<div class="im num' + (x.importe == null ? " pend" : "") + '">' + (x.importe == null ? "Por confirmar" : money(x.importe)) + "</div></div>";
+      '<div class="im num' + (x.importe == null ? " pend" : "") + '">' + (x.importe == null ? "Por confirmar" : x.importe === 0 ? "Sin costo" : money(x.importe)) + "</div></div>";
   });
   // total, anticipo y resto
   h += '<div class="t-total"><span class="l">TOTAL</span><span class="m">' + (c.total == null ? "Por confirmar" : money(c.total)) +
@@ -2318,7 +2319,7 @@ function construirPDF(c){
   agrega(snacksTitulo(c) + (c.faltan && c.nSnacks ? " (faltan " + c.faltan + ")" : ""),
     c.nSnacks ? gruposTxt(c, ". ") + "." : "Los eliges con nosotros.",
     c.nSnacks + " de " + tope + " charolas", "Incluido");
-  c.extras.forEach(x => agrega(x.nombre, x.detalle, x.calculo, x.importe == null ? "Por confirmar" : money(x.importe)));
+  c.extras.forEach(x => agrega(x.nombre, x.detalle, x.calculo, x.importe == null ? "Por confirmar" : x.importe === 0 ? "Sin costo" : money(x.importe)));
   doc.autoTable({
     startY: 98,
     margin: { left:M, right:M, top:16, bottom:28 },
@@ -2453,7 +2454,7 @@ function mensajeWA(c){
   if (c.extras.length) {
     L.push("");
     L.push("Extras: " + c.extras.map(x => x.nombre + (x.cobro === "por hora" ? " (" + plural(x.cant, "hora", "horas") + ")" : "") + (x.tema ? " (tema: " + x.tema + ")" : "") +
-      " — " + (x.importe == null ? "por confirmar" : money(x.importe))).join("; "));
+      " — " + (x.importe == null ? "por confirmar" : x.importe === 0 ? "sin costo" : money(x.importe))).join("; "));
   }
   if (c.cliente.notas) { L.push(""); L.push("Notas: " + c.cliente.notas.replace(/\s*\n\s*/g, " ")); }
   L.push("------------------------------");
