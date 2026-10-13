@@ -139,7 +139,7 @@ i.deco{display:block;border-radius:50%;width:10px;height:10px;box-shadow:inset -
 .hero .lead{font-size:1.08rem}
 .hero-cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
 .hero .lead.hero-lead{color:var(--ink);font-size:1.12rem;line-height:1.45}
-.hero-incl{list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 12px;margin-top:14px;max-width:32rem;font-weight:700;font-size:.98rem;line-height:1.2}
+.hero-incl{list-style:none;display:grid;grid-template-columns:minmax(0,1fr);gap:9px;margin-top:14px;max-width:32rem;font-weight:700;font-size:.98rem;line-height:1.2}
 .hero-incl li{display:flex;gap:8px;align-items:center}
 .hero-incl svg{width:26px;height:26px;flex:none;padding:5px;border-radius:50%;background:var(--turquesa-d);color:#fff}
 .eventos{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px;list-style:none}
@@ -260,7 +260,7 @@ i.deco{display:block;border-radius:50%;width:10px;height:10px;box-shadow:inset -
 .paq .rango{font-weight:800;font-size:.85rem;color:var(--ink-2);text-transform:uppercase;letter-spacing:.08em}
 .paq h3{font-size:2.6rem;line-height:1;margin:.2rem 0 .1rem;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
 .paq h3 small{font-size:1.05rem;font-weight:600;color:var(--ink-2)}
-.paq .precio{display:flex;align-items:baseline;gap:6px;margin:12px 0 2px}
+.paq .precio{display:flex;align-items:baseline;gap:6px;margin:12px 0 16px}
 .paq .precio b{font-family:var(--f-tit);font-size:2.3rem;line-height:1;color:var(--dorado-d)}
 .paq .precio small{font-weight:700;color:var(--ink-2)}
 .paq .pp{font-weight:800;font-size:.95rem;margin-bottom:14px}
@@ -281,7 +281,13 @@ i.deco{display:block;border-radius:50%;width:10px;height:10px;box-shadow:inset -
 #cotiza{padding:44px 0 120px}
 .quote{background:var(--ink);color:#fff;border-radius:var(--r-xl);padding:30px 14px 22px;position:relative;overflow:hidden}
 .quote .decos{position:absolute;inset:0;pointer-events:none;overflow:hidden}
-.quote-head,.quote .prog,.reinicio,.wizard{position:relative;z-index:2}
+.quote-head,.quote .prog,.reinicio,.wizard,.mis-snacks{position:relative;z-index:2}
+.mis-snacks{display:flex;align-items:center;justify-content:space-between;gap:10px 14px;flex-wrap:wrap;margin-top:18px;padding:12px 14px;border-radius:var(--r-lg);background:rgba(255,255,255,.08);box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.18)}
+.mis-snacks .ms-tx{display:flex;flex-direction:column;gap:2px;min-width:0}
+.mis-snacks .ms-tx b{font-size:1.02rem}
+.mis-snacks .ms-tx b .num{color:var(--dorado)}
+.mis-snacks .ms-tx small{color:rgba(255,255,255,.85);font-weight:600;font-size:.86rem}
+.mis-snacks .btn{min-height:44px;padding:.5rem 1.1rem;font-size:.95rem}
 .quote-head{padding:0 6px}
 .quote .eyebrow{color:var(--dorado)}
 .quote h2{color:#fff;margin-bottom:.3rem}
@@ -363,6 +369,8 @@ textarea.inp{min-height:96px;resize:vertical}
 /* paso 3: extras */
 .extras-l{display:grid;gap:12px}
 .ex{background:var(--papel);border-radius:var(--r-md);padding:12px 14px;box-shadow:inset 0 0 0 2px var(--linea)}
+.ex-nota{display:flex;gap:8px;align-items:flex-start;margin-top:10px;font-weight:700;font-size:.9rem;color:var(--ink);background:var(--papel);border-radius:var(--r-md);padding:.6rem .75rem}
+.ex-nota svg{width:20px;height:20px;flex:none;color:var(--turquesa-d);margin-top:1px}
 .ex.on{background:var(--s-aqua);box-shadow:inset 0 0 0 2px var(--turquesa-d)}
 .ex-fila{display:flex;align-items:center;gap:12px;min-height:52px}
 .ex-fila.hora{flex-wrap:wrap}
@@ -657,7 +665,7 @@ body.tb-on .burbuja{display:none}
     </nav>
     <div class="nav-acts">
       <a href="#inicio" class="ico-inicio" data-a="inicio" aria-label="Ir al inicio" title="Inicio"><svg aria-hidden="true"><use href="#ic-casa"/></svg></a>
-      <a href="#cotiza" class="btn btn-turquesa">Cotizar</a>
+      <a href="#arma" class="btn btn-turquesa" data-a="cotizar">Cotizar</a>
     </div>
   </div>
 </header>
@@ -678,10 +686,9 @@ body.tb-on .burbuja{display:none}
           <li><svg aria-hidden="true"><use href="#ic-check"/></svg>Personal que atiende</li>
           <li><svg aria-hidden="true"><use href="#ic-check"/></svg><span><span data-txt="horasPal">Dos</span> horas de servicio</span></li>
           <li><svg aria-hidden="true"><use href="#ic-check"/></svg>Regalo para el festejado</li>
-          <li><svg aria-hidden="true"><use href="#ic-check"/></svg>Y más servicios</li>
         </ul>
         <div class="hero-cta">
-          <a href="#cotiza" class="btn btn-turquesa">Arma tu cotización</a>
+          <a href="#arma" class="btn btn-turquesa" data-a="cotizar">Cotizar mi evento</a>
           <a href="#" class="btn btn-rosa js-wa"><svg aria-hidden="true"><use href="#ic-wa"/></svg>Escríbenos</a>
         </div>
         <ul class="eventos" aria-label="Eventos que atendemos">
@@ -700,7 +707,6 @@ body.tb-on .burbuja{display:none}
           <img data-img="heroFoto" id="heroImg" alt="" width="1200" height="1097" fetchpriority="high">
           <span class="etq-ia" id="etqIA">Imagen ilustrativa</span>
         </div>
-        <div class="sticker st-precio"><small>Desde</small><b class="num" id="stPrecio">$36</b><small>por invitado</small></div>
       </div>
     </div>
   </section>
@@ -716,7 +722,7 @@ body.tb-on .burbuja{display:none}
         <p class="lead"><b>Tres pasos y tu cotización queda armada.</b></p>
       </div>
       <div class="pasos" id="pasos"></div>
-      <div class="como-cta reveal"><a href="#cotiza" class="btn btn-turquesa">Empezar mi cotización<svg aria-hidden="true"><use href="#ic-flecha"/></svg></a></div>
+      <div class="como-cta reveal"><a href="#arma" class="btn btn-turquesa" data-a="cotizar">Cotizar mi evento<svg aria-hidden="true"><use href="#ic-flecha"/></svg></a></div>
     </div>
   </section>
 
@@ -733,7 +739,7 @@ body.tb-on .burbuja{display:none}
       <div class="sec-head reveal">
         <p class="eyebrow">Arma tu barra</p>
         <h2>Elige <em><span data-txt="productos">12</span> snacks</em> para tu barra</h2>
-        <p class="lead">Una charola por producto. Combina dulce, salado y fresco como más te guste.</p>
+        <p class="lead">Una charola por producto. Combina dulce, salado y fresco como más te guste; luego completa los datos de tu evento.</p>
       </div>
       <div class="arma-acts">
         <button type="button" class="btn btn-lila" data-a="azar"><svg aria-hidden="true"><use href="#ic-dado"/></svg>Al azar</button>
@@ -775,10 +781,6 @@ body.tb-on .burbuja{display:none}
         <p class="lead">Todos incluyen la barra con <span data-txt="productos">12</span> snacks a tu elección, personal, <span data-txt="horas">2</span> horas de servicio y regalo para el festejado.</p>
       </div>
       <div class="paquetes" id="paquetesGrid"></div>
-      <div class="ahorro reveal">
-        <span class="ic"><svg aria-hidden="true"><use href="#ic-estrella"/></svg></span>
-        <p id="ahorroTxt"></p>
-      </div>
     </div>
   </section>
 
@@ -807,9 +809,10 @@ body.tb-on .burbuja{display:none}
         </div>
         <div class="quote-head">
           <p class="eyebrow">Tu cotización</p>
-          <h2>Arma tu <em>cotización</em></h2>
-          <p class="lead">Elige y ve tu total al momento. Te la llevas en PDF o nos la mandas por WhatsApp.</p>
+          <h2>Datos de tu <em>evento</em></h2>
+          <p class="lead">Con tus snacks ya elegidos, llena estos datos y te llevas tu cotización en PDF o nos la mandas por WhatsApp.</p>
         </div>
+        <div class="mis-snacks" id="misSnacks"></div>
         <ol class="prog" id="prog" aria-label="Pasos de la cotización"></ol>
         <div class="sr" id="pasoLive" aria-live="polite"></div>
         <div class="reinicio" id="reinicio"></div>
@@ -1375,7 +1378,8 @@ const REGLAS = {
 /* precio: null = "Precio por confirmar" en pantalla, PDF y WhatsApp (no suma al total) */
 const EXTRAS = [
   { id: "tiempo", nombre: "Tiempo adicional de servicio", detalle: "Se solicita con anticipación para contemplar más producto", cobro: "por hora", precio: null, max: 2 },  // POR CONFIRMAR precio
-  { id: "vasos",  nombre: "Vasos personalizados", detalle: "Envía tu diseño en el tiempo y tamaño establecido", cobro: "por evento", precio: 0, gratis: true, pideTema: true }  // sin costo extra (pedido por la clienta)
+  { id: "vasos",  nombre: "Vasos personalizados", detalle: "Envía la imagen que quieres que lleven, en el tiempo y tamaño establecido", cobro: "por evento", precio: 0, gratis: true,
+    notaOn: "Cuando nos mandes tu cotización por WhatsApp, envíanos ahí la imagen para tus vasos." }  // sin costo extra (pedido por la clienta)
 ];
 
 const INCLUYE = [
@@ -1402,6 +1406,8 @@ const PRODUCTOS = [
   { id: "jicama",              nombre: "Jícama",               cat: "fruta" },
   { id: "pepino",              nombre: "Pepino",               cat: "fruta" },
   { id: "zanahoria",           nombre: "Zanahoria rallada",    cat: "fruta" },
+  { id: "pina",                nombre: "Piña",                 cat: "fruta" },
+  { id: "naranja",             nombre: "Naranja",              cat: "fruta" },
   { id: "panditas",            nombre: "Panditas",             cat: "gomitas" },
   { id: "manguitos",           nombre: "Manguitos",            cat: "gomitas" },
   { id: "aros-manzana",        nombre: "Aros de manzana",      cat: "gomitas" },
@@ -1473,7 +1479,7 @@ const FAQ = [
   { q: "¿Cómo elijo los snacks?", a: "Escoges " + REGLAS.productosPorBarra + " productos de nuestra lista, uno por charola. Si no sabes cuáles, usa “Al azar” y te armamos una mezcla balanceada." },
   { q: "¿Cuánto tiempo dura el servicio?", a: REGLAS.horasIncluidas + " horas. Si necesitas más tiempo, pídelo con anticipación para contemplar más producto; tiene un costo extra." },
   { q: "¿Cómo aparto mi fecha?", a: "Con el " + REGLAS.anticipoPct + "% de anticipo. El otro " + (100 - REGLAS.anticipoPct) + "% se liquida " + REGLAS.liquidarHorasAntes + " horas antes de tu evento." },
-  { q: "¿Pueden personalizar los vasos?", a: "Sí. Si gustas personalizar tus vasos, envía tu diseño sin costo extra, en el tiempo y tamaño establecido." },
+  { q: "¿Pueden personalizar los vasos?", a: "Sí, sin costo extra. Solo envíanos la imagen que quieres que lleven tus vasos, en el tiempo y tamaño establecido." },
   { q: "¿Qué es el regalo al festejado?", a: "Un detalle de " + CONFIG.nombre + " para quien celebra." }   // POR CONFIRMAR qué es el regalo
 ];
 
@@ -1496,8 +1502,8 @@ function estadoBase(){
 function normalizarEstado(o){
   if (!o || typeof o !== "object") return null;
   const e = estadoBase();
-  e.paso = clampInt(o.paso, 1, 4, 1);
-  e.maxPaso = Math.max(e.paso, clampInt(o.maxPaso, 1, 4, 1));
+  e.paso = clampInt(o.paso, 1, 3, 1);
+  e.maxPaso = Math.max(e.paso, clampInt(o.maxPaso, 1, 3, 1));
   if (EVENTOS.indexOf(o.evento) >= 0) e.evento = o.evento;
   if (typeof o.fecha === "string" && /^\d{4}-\d{2}-\d{2}$/.test(o.fecha) && o.fecha >= fechaMinima()) e.fecha = o.fecha; // una fecha que ya venció se descarta
   e.lugar = String(o.lugar || "").slice(0, 120);
@@ -1658,7 +1664,7 @@ function tomarFoto(){
 /* ############################################################################
    6 · RENDER
    ############################################################################ */
-const PASOS_NOMBRE = ["Evento", "Snacks", "Extras", "Tu cotización"];
+const PASOS_NOMBRE = ["Evento", "Extras", "Tu cotización"];   // los snacks se eligen en "Arma tu barra"
 
 /* ---- Marca, imágenes y textos fijos ---- */
 function pintarMarca(){
@@ -1677,7 +1683,6 @@ function pintarMarca(){
   const TXT = { minInv: REGLAS.minInvitados, productos: REGLAS.productosPorBarra, horas: REGLAS.horasIncluidas,
                 horasPal: PAL[REGLAS.horasIncluidas] || REGLAS.horasIncluidas };
   $$("[data-txt]").forEach(el => { const v = TXT[el.dataset.txt]; if (v != null) el.textContent = v; });
-  $("#stPrecio").textContent = money(minPorInvitado());     // sale de PAQUETES, nunca a mano
   $("#anio").textContent = new Date().getFullYear();
 }
 
@@ -1761,7 +1766,7 @@ function syncCatalogo(){
   const vac = $("[data-a='vaciar']"); if (vac) vac.setAttribute("aria-disabled", String(!n));
   $("#armaPie").innerHTML = '<div><p aria-live="polite">Llevas <b class="num">' + n + "</b> de " + tope + " snacks</p>" +
     '<div class="puntos" aria-hidden="true">' + puntos.join("") + "</div></div>" +
-    '<button type="button" class="btn btn-turquesa" data-a="ir-snacks">' + (n ? "Ver mi barra" : "Ir al cotizador") + ic("ic-flecha", "") + "</button>";
+    '<button type="button" class="btn btn-turquesa" data-a="ir-snacks">' + "Siguiente: datos de tu evento" + ic("ic-flecha", "") + "</button>";
 }
 
 /* ---- Secciones que leen de la configuración ---- */
@@ -1777,19 +1782,16 @@ function renderSecciones(){
       (rangoPaquete(p) ? '<p class="rango">' + esc(rangoPaquete(p)) + "</p>" : '<p class="rango" aria-hidden="true">&nbsp;</p>') +
       "<h3><small>Hasta</small>" + p.hasta + "<small>invitados</small></h3>" +
       '<p class="precio"><b class="num">' + money(p.precio) + "</b><small>por evento</small></p>" +
-      '<p class="pp"><span class="num">≈ ' + money(Math.round(p.precio / p.hasta)) + " por invitado</span></p>" +
       incl +
-      '<button type="button" class="btn ' + (p.etiqueta ? "btn-turquesa" : "btn-linea") + '" data-a="paquete" data-v="' + p.id + '">Cotizar este paquete</button>' +
+      '<button type="button" class="btn ' + (p.etiqueta ? "btn-turquesa" : "btn-linea") + '" data-a="paquete" data-v="' + p.id + '">Cotizar mi evento</button>' +
     "</article>").join("") +
     '<article class="paq-mas reveal"><div><h3>¿Más de ' + MAX_PAQ + " invitados?</h3><p>Escríbenos y te damos precio especial.</p></div>" +
     '<a class="btn btn-rosa" href="' + esc(waLink(msgNegocio("¡Hola " + CONFIG.nombre + "! Quiero precio para un evento de más de " + MAX_PAQ + " invitados."))) + '" target="_blank" rel="noopener">' + ic("ic-wa") + "Pedir precio especial</a></article>";
 
-  const ej = PAQUETES.slice().sort((a, b) => a.hasta - b.hasta).map(p => money(Math.round(p.precio / p.hasta)) + " con " + p.hasta);
-  $("#ahorroTxt").textContent = "Entre más invitados, menos pagan por persona: " + listaY(ej) + ".";
 
   $("#incGrid").innerHTML = INCLUYE.map((t, i) => '<div class="inc reveal"><div class="ic">' + ic(INCLUYE_ICONOS[i] || "ic-check", "") + "</div><b>" + esc(t) + "</b></div>").join("") +
     '<div class="inc extra reveal"><div class="ic">' + ic("ic-vaso", "") + "</div><div><b>Extras</b><p>" +
-    esc("Tiempo adicional (con costo, se pide con anticipación). Vasos personalizados sin costo extra: envía tu diseño en el tiempo y tamaño establecido.") + "</p></div></div>";
+    esc("Tiempo adicional (con costo, se pide con anticipación). Vasos personalizados sin costo extra: envía la imagen que quieres que lleven, en el tiempo y tamaño establecido.") + "</p></div></div>";
 
   $("#faq").innerHTML = FAQ.map(f => "<details><summary>" + esc(f.q) + "</summary><p>" + esc(f.a) + "</p></details>").join("");
 }
@@ -1836,11 +1838,11 @@ function renderReinicio(){
       : '<button type="button" class="link-btn" data-a="reiniciar">Empezar de nuevo</button>');
 }
 
-/* Línea en vivo bajo los invitados: paquete, precio y costo por invitado */
+/* Línea en vivo bajo los invitados: paquete y precio */
 function paqVivoHTML(c){
   if (!c.paquete) return "Para más de " + MAX_PAQ + " invitados te damos <b>precio especial</b> por WhatsApp." +
     '<br><a class="btn btn-rosa" href="' + esc(waLink(msgNegocio("¡Hola " + CONFIG.nombre + "! Quiero precio para un evento de " + c.invitados + " invitados."))) + '" target="_blank" rel="noopener">' + ic("ic-wa") + "Pedir precio especial</a>";
-  return "Tu paquete: <b>hasta " + c.paquete.hasta + " invitados · " + money(c.paquete.precio) + "</b> · ≈ " + money(c.porInvitado) + " por invitado";
+  return "Tu paquete: <b>hasta " + c.paquete.hasta + " invitados · " + money(c.paquete.precio) + "</b>";
 }
 const nav = (atras, sig) => '<div class="nav-pasos">' + (atras ? '<button type="button" class="btn btn-linea" data-a="atras">Atrás</button>' : "") +
   (sig ? '<button type="button" class="btn btn-turquesa" data-a="sig">' + sig + "</button>" : "") + "</div>";
@@ -1878,32 +1880,6 @@ function miniBarraHTML(c){
   return '<div class="mbarra" aria-hidden="true"><div class="mb-top">' + celdas.join("") + '</div><div class="mb-frente">' +
     '<svg class="led" viewBox="0 0 100 50" preserveAspectRatio="none"><path d="M0 18 C22 18 30 42 50 42 S78 18 100 18"/></svg><i class="lg"></i></div></div>';
 }
-function panel2(c){
-  const tope = REGLAS.productosPorBarra, n = c.nSnacks, lleno = n >= tope;
-  const acciones = confirmandoLimpiar
-    ? '<span class="conf">¿Quitar ' + (n === 1 ? "tu snack" : "tus " + n + " snacks") + '? <button type="button" class="si" data-a="limpiar-si">Sí, quitar</button><button type="button" data-a="limpiar-no">No</button></span>'
-    : '<button type="button" class="btn btn-lila" data-a="sorprende">' + ic("ic-dado") + "Al azar</button>" +
-      (n ? '<button type="button" class="btn btn-linea" data-a="limpiar">Limpiar</button>' : "");
-  return '<h3 tabindex="-1">Tus ' + tope + " snacks</h3>" +
-    '<div class="contador">' +
-      '<p class="cnt-big" aria-live="polite" aria-atomic="true">' + (lleno ? ic("ic-estrella", "") : "") + '<b class="num">' + n + "</b> de " + tope +
-        (lleno ? '<span class="listo">¡Tu barra está completa!</span>' : "") + "</p>" +
-      miniBarraHTML(c) +
-    "</div>" +
-    '<div class="snack-acts">' + acciones + "</div>" +
-    CATEGORIAS.map(cat => {
-      const prods = PRODUCTOS.filter(p => p.cat === cat.id);
-      return '<div class="cat-g c-' + cat.color + '"><h4 id="cg-' + cat.id + '"><span aria-hidden="true">' + cat.emoji + "</span>" + esc(cat.nombre) + "</h4>" +
-        '<div class="chips-q" role="group" aria-labelledby="cg-' + cat.id + '">' + prods.map(p => {
-          const on = estado.snacks.indexOf(p.id) >= 0;
-          return '<button type="button" class="tchip" data-a="snack" data-v="' + p.id + '" aria-pressed="' + on + '"' + (lleno && !on ? ' aria-disabled="true"' : "") + ">" +
-            (on ? ic("ic-check", "") : '<i class="pdot" aria-hidden="true"></i>') + esc(p.nombre) + "</button>";
-        }).join("") + "</div></div>";
-    }).join("") +
-    (c.faltan ? '<p class="aviso-min">Te faltan ' + plural(c.faltan, "snack", "snacks") + ". Puedes elegirlos después con nosotros.</p>"
-              : '<p class="aviso-min ok">¡Listo! Elegiste tus ' + tope + " snacks. Puedes cambiar los que quieras.</p>") +
-    nav(true, "Siguiente");
-}
 function precioExtraTxt(x){
   if (x.gratis) return "Sin costo extra";
   if (typeof x.precio === "number" && isFinite(x.precio)) return money(x.precio) + " " + x.cobro;
@@ -1921,6 +1897,7 @@ function panel3(){
     return '<div class="ex' + (on ? " on" : "") + '"><div class="ex-fila"><div class="tx"><b id="ex-' + x.id + '">' + esc(x.nombre) + '</b><span class="d">' + esc(x.detalle) + '</span><span class="p">' + esc(precioExtraTxt(x)) + "</span></div>" +
       '<span class="sw-wrap"><button type="button" class="sw" role="switch" aria-checked="' + on + '" aria-labelledby="ex-' + x.id + '" data-a="extra" data-v="' + x.id + '"></button></span></div>' +
       (on && x.pideTema ? '<label class="campo"><span class="l">Temática de tu evento</span><input class="inp" id="fTema" type="text" maxlength="80" autocomplete="off" placeholder="Ej. Frozen, Vaquero, Rosa y dorado" value="' + esc(estado.tema) + '"></label>' : "") +
+      (on && x.notaOn ? '<p class="ex-nota">' + ic("ic-wa", "") + "<span>" + esc(x.notaOn) + "</span></p>" : "") +
       "</div>";
   }).join("") + "</div>" +
   '<div class="info-box">' + ic("ic-regalo", "") + "<span>Tu paquete incluye: " + esc(INCLUYE.join(" · ")) + ".</span></div>" +
@@ -1937,12 +1914,12 @@ function panel4(c){
   return '<h3 tabindex="-1">Tu cotización</h3>' +
     '<label class="campo"><span class="l">Tu nombre</span><input class="inp" id="fNombre" type="text" autocomplete="name" maxlength="80" placeholder="Ej. Mariana López" value="' + esc(cl.nombre) + '"></label>' +
     '<label class="campo"><span class="l">Teléfono <small>(opcional)</small></span><input class="inp" id="fTel" type="tel" inputmode="tel" autocomplete="tel" maxlength="30" placeholder="10 dígitos" value="' + esc(cl.telefono) + '"></label>' +
-    '<label class="campo"><span class="l">Notas <small>(opcional)</small></span><textarea class="inp" id="fNotas" maxlength="500" placeholder="Alergias, colores de tu fiesta, horario…">' + esc(cl.notas) + "</textarea></label>" +
+    '<label class="campo"><span class="l">Observaciones <small>(opcional)</small></span><textarea class="inp" id="fNotas" maxlength="500" placeholder="Algo que quieras comentarnos de tu evento">' + esc(cl.notas) + "</textarea></label>" +
     '<div style="margin-top:20px">' + ticketHTML(c) + "</div>" + accionesHTML() +
     nav(true, "");
 }
 
-/* Ticket de resumen: lo usan el paso 4 y la hoja inferior (mismos números, salen de calcular) */
+/* Ticket de resumen: lo usan el último paso y la hoja inferior (mismos números, salen de calcular) */
 function ticketHTML(c){
   const hoy = fechaCorta(new Date()), tope = REGLAS.productosPorBarra;
   let h = '<div class="ticket"><div class="t-head"><span class="mk" aria-hidden="true"></span><div><b>' + esc(NEGOCIO.nombre) + "</b><small>Folio: se asigna al enviar · Emisión " + hoy + "</small></div></div>" +
@@ -1956,7 +1933,7 @@ function ticketHTML(c){
   h += '<div class="t-snacks"><b>' + esc(snacksTitulo(c)) + "<span>" + c.nSnacks + " de " + tope + " charolas</span></b>";
   if (!c.nSnacks) {
     h += '<div class="t-vacio"><div class="c-rosa"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#i-vaso"/></svg></div>Aún no eliges tus snacks.' +
-      '<div><button type="button" class="btn btn-turquesa" data-a="ir" data-v="2">Elegir snacks</button></div></div>';
+      '<div><button type="button" class="btn btn-turquesa" data-a="a-snacks">Elegir snacks</button></div></div>';
   } else {
     c.grupos.forEach(g => {
       h += '<div class="t-grupo c-' + g.cat.color + '"><span class="cg"><span aria-hidden="true">' + g.cat.emoji + "</span> " + esc(g.cat.nombre) + ":</span>" +
@@ -1973,7 +1950,7 @@ function ticketHTML(c){
   // total, anticipo y resto
   h += '<div class="t-total"><span class="l">TOTAL</span><span class="m">' + (c.total == null ? "Por confirmar" : money(c.total)) +
     (c.total != null && c.hayPendientes ? "<small>+ extras por confirmar</small>" : "") + "</span></div>" +
-    (c.porInvitado ? '<p class="t-pp num">≈ ' + money(c.porInvitado) + " por invitado (paquete)</p>" : '<p class="t-pp">Precio especial por WhatsApp</p>') +
+    (c.paquete ? "" : '<p class="t-pp">Precio especial por WhatsApp</p>') +
     '<div class="t-dest"><div><span>Anticipo para apartar (' + REGLAS.anticipoPct + "%)</span><b>" + (c.anticipo == null ? "Por confirmar" : money(c.anticipo)) + "</b></div>" +
     "<div><span>Resto (" + REGLAS.liquidarHorasAntes + " h antes del evento)</span><b>" + (c.resto == null ? "Por confirmar" : money(c.resto)) +
       (c.resto != null && c.hayPendientes ? "<small>+ extras</small>" : "") + "</b></div></div>" +
@@ -2005,8 +1982,8 @@ function repintarConFoco(contenedor, pintar, saltar){
 function renderPanel(){
   const w = $("#wizard"), c = calcular(estado);
   repintarConFoco(w, () => {
-    const html = [panel1, panel2, panel3, panel4][estado.paso - 1](c);
-    w.innerHTML = '<div class="panel' + (entraPanel ? " entra" : "") + '" id="panel" role="group" aria-label="Paso ' + estado.paso + " de 4: " + esc(PASOS_NOMBRE[estado.paso - 1]) + '">' + html + "</div>";
+    const html = [panel1, panel3, panel4][estado.paso - 1](c);
+    w.innerHTML = '<div class="panel' + (entraPanel ? " entra" : "") + '" id="panel" role="group" aria-label="Paso ' + estado.paso + " de " + PASOS_NOMBRE.length + ": " + esc(PASOS_NOMBRE[estado.paso - 1]) + '">' + html + "</div>";
   }, entraPanel);
   ultimoSnack = "";
 }
@@ -2022,8 +1999,14 @@ function renderTotales(){
   const pv = $("#paqVivo"); if (pv) pv.innerHTML = paqVivoHTML(c);
   if ($("#hojaResumen").classList.contains("open")) pintarResumen(c);
 }
+function renderMisSnacks(c){
+  const tope = REGLAS.productosPorBarra, n = c.nSnacks;
+  $("#misSnacks").innerHTML = '<div class="ms-tx" aria-live="polite"><b>Tu barra: <span class="num">' + n + "</span> de " + tope + " snacks</b><small>" +
+    (n >= tope ? "¡Completa! Puedes cambiarlos cuando quieras." : n ? "Te faltan " + plural(tope - n, "snack", "snacks") + "; puedes elegirlos después con nosotros." : "Aún no eliges tus snacks.") + "</small></div>" +
+    '<button type="button" class="btn ' + (n ? "btn-linea" : "btn-dorado") + '" data-a="a-snacks">' + (n ? "Cambiar snacks" : "Elegir snacks") + "</button>";
+}
 function render(){
-  renderProgreso(); renderReinicio(); renderPanel(); renderTotales(); syncCatalogo();
+  renderMisSnacks(calcular(estado)); renderProgreso(); renderReinicio(); renderPanel(); renderTotales(); syncCatalogo();
   entraPanel = false;
   guardarBorrador();
 }
@@ -2098,16 +2081,17 @@ function irAlCotizador(){
   const y = objetivo.getBoundingClientRect().top + window.scrollY - (parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--cinta-h")) || 0) - 84;
   window.scrollTo({ top: Math.max(0, y), behavior: reducirMov() ? "auto" : "smooth" });
 }
+function irA(sel){ const el = $(sel); if (el) el.scrollIntoView({ behavior: reducirMov() ? "auto" : "smooth", block: "start" }); }
 function setPaso(n){
   estado.paso = n; estado.maxPaso = Math.max(estado.maxPaso, n);
   confirmandoLimpiar = false;
   entraPanel = true; tocado = true;
   render();
-  $("#pasoLive").textContent = "Paso " + n + " de 4: " + PASOS_NOMBRE[n - 1];
+  $("#pasoLive").textContent = "Paso " + n + " de " + PASOS_NOMBRE.length + ": " + PASOS_NOMBRE[n - 1];
   const h = $("#panel h3"); if (h) h.focus({ preventScroll: true });
   irAlCotizador();
 }
-function siguiente(){ if (estado.paso < 4) setPaso(estado.paso + 1); }
+function siguiente(){ if (estado.paso < PASOS_NOMBRE.length) setPaso(estado.paso + 1); }
 
 /* Agrega o quita un snack; respeta el tope de 12 */
 function toggleSnack(id){
@@ -2137,7 +2121,7 @@ function reiniciar(){
 }
 function pedirNombre(){
   if (hojaAbierta) cerrarHoja(false);
-  if (estado.paso !== 4) setPaso(4);
+  if (estado.paso !== PASOS_NOMBRE.length) setPaso(PASOS_NOMBRE.length);
   const f = $("#fNombre");
   if (f) { f.classList.add("err"); f.focus(); }
   toast("Dinos tu nombre para armar tu cotización");
@@ -2208,10 +2192,19 @@ document.addEventListener("click", e => {
     case "limpiar": confirmandoLimpiar = true; renderPanel(); { const b = $("[data-a='limpiar-no']"); if (b) b.focus(); } break;
     case "limpiar-no": confirmandoLimpiar = false; renderPanel(); { const b = $("[data-a='limpiar']"); if (b) b.focus(); } break;
     case "limpiar-si": confirmandoLimpiar = false; estado.snacks = []; cambio(); { const b = $("[data-a='sorprende']"); if (b) b.focus(); } toast("Listo, tu barra está vacía"); break;
-    case "ir-snacks": {
+    case "ir-snacks": {   // pie del catálogo: siguiente paso
       if (hojaAbierta) cerrarHoja(false);
-      estado.paso = 2; estado.maxPaso = Math.max(estado.maxPaso, 2); entraPanel = true; cambio();
-      $("#cotiza").scrollIntoView({ behavior: reducirMov() ? "auto" : "smooth", block: "start" });
+      irA("#cotiza");
+      break;
+    }
+    case "a-snacks": {    // desde el cotizador o el resumen: volver al catálogo
+      if (hojaAbierta) cerrarHoja(false);
+      irA("#arma");
+      break;
+    }
+    case "cotizar": {     // botones "Cotizar mi evento": a los snacks si faltan, si no al cotizador
+      e.preventDefault();
+      irA(estado.snacks.length >= REGLAS.productosPorBarra ? "#cotiza" : "#arma");
       break;
     }
     case "foto": abrirFoto(v, t); break;
@@ -2220,8 +2213,9 @@ document.addEventListener("click", e => {
       const p = PAQUETES.find(x => x.id === v); if (!p) break;
       estado.invitados = p.hasta; msgInv = "";
       cambio();
-      toast("Paquete hasta " + p.hasta + " invitados ✓ · " + money(p.precio));
-      $("#cotiza").scrollIntoView({ behavior: reducirMov() ? "auto" : "smooth", block: "start" });
+      const faltan = estado.snacks.length < REGLAS.productosPorBarra;
+      toast("Paquete hasta " + p.hasta + " invitados ✓ · " + money(p.precio) + (faltan ? " · Ahora elige tus snacks" : ""));
+      irA(faltan ? "#arma" : "#cotiza");
       break;
     }
     case "evento": estado.evento = estado.evento === v ? "" : v; cambio(); break;
@@ -2234,7 +2228,7 @@ document.addEventListener("click", e => {
       estado.extras[x.id] = clampInt((estado.extras[x.id] || 0) + (a === "hora+" ? 1 : -1), 0, x.max || 1, 0);
       cambio(); break;
     }
-    case "ir": { const n = Number(v); if (n >= 1 && n <= 4 && n <= Math.max(estado.maxPaso, hojaAbierta ? 2 : 0)) { if (hojaAbierta) cerrarHoja(false); setPaso(n); } break; }
+    case "ir": { const n = Number(v); if (n >= 1 && n <= PASOS_NOMBRE.length && n <= estado.maxPaso) { if (hojaAbierta) cerrarHoja(false); setPaso(n); } break; }
     case "sig": siguiente(); break;
     case "atras": if (estado.paso > 1) setPaso(estado.paso - 1); break;
     case "reiniciar": confirmandoReinicio = true; renderReinicio(); { const b = $("[data-a='reiniciar-no']"); if (b) b.focus(); } break;
@@ -2438,7 +2432,7 @@ function construirPDF(c){
   if (pend) { doc.setFont("helvetica", "normal"); doc.setFontSize(8.5); color("setTextColor", BLANCO); doc.text("+ extras por confirmar", W - M - 5, y + 15.6, { align:"right" }); }
   y += altoT + 5;
   doc.setFont("helvetica", "normal"); doc.setFontSize(9); color("setTextColor", GRIS);
-  doc.text(c.porInvitado ? "Aprox. " + money(c.porInvitado) + " por invitado (paquete)" : "Precio especial por WhatsApp", W - M, y, { align:"right" });
+  if (!c.paquete) doc.text("Precio especial por WhatsApp", W - M, y, { align:"right" });
   y += 4.5;
   const BW = (TW - 4) / 2;
   [["Anticipo para apartar (" + REGLAS.anticipoPct + "%)", c.anticipo == null ? "Por confirmar" : money(c.anticipo), ""],
@@ -2456,7 +2450,7 @@ function construirPDF(c){
     const nota = (x, yy, w, nl) => {
       color("setFillColor", CREMA); color("setDrawColor", TURQD); doc.setLineWidth(0.4);
       doc.roundedRect(x, yy, w, nl.length * 4.2 + 11, 2.5, 2.5, "FD");
-      doc.setFont("helvetica", "bold"); doc.setFontSize(8); color("setTextColor", GRIS); doc.text("NOTAS DEL CLIENTE", x + 4, yy + 5.5);
+      doc.setFont("helvetica", "bold"); doc.setFontSize(8); color("setTextColor", GRIS); doc.text("OBSERVACIONES", x + 4, yy + 5.5);
       doc.setFont("helvetica", "normal"); doc.setFontSize(9); color("setTextColor", INK);
       doc.text(nl, x + 4, yy + 10, { baseline:"top", lineHeightFactor:1.25 });
     };
@@ -2532,7 +2526,7 @@ function mensajeWA(c){
     L.push("Extras: " + c.extras.map(x => x.nombre + (x.cobro === "por hora" ? " (" + plural(x.cant, "hora", "horas") + ")" : "") + (x.tema ? " (tema: " + x.tema + ")" : "") +
       " — " + (x.importe == null ? "por confirmar" : x.importe === 0 ? "sin costo" : money(x.importe))).join("; "));
   }
-  if (c.cliente.notas) { L.push(""); L.push("Notas: " + c.cliente.notas.replace(/\s*\n\s*/g, " ")); }
+  if (c.cliente.notas) { L.push(""); L.push("Observaciones: " + c.cliente.notas.replace(/\s*\n\s*/g, " ")); }
   L.push("------------------------------");
   L.push("*TOTAL: " + totalTxt(c) + "*");
   L.push("Anticipo para apartar (" + REGLAS.anticipoPct + "%): " + (c.anticipo == null ? "por confirmar" : money(c.anticipo)));
