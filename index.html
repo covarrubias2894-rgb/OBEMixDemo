@@ -248,8 +248,7 @@ i.deco{display:block;border-radius:50%;width:10px;height:10px;box-shadow:inset -
 .paso:nth-child(3){--c:var(--onda-lila)}
 .paso h3{font-size:1.06rem;margin-bottom:2px}
 .paso p{color:var(--ink-2);font-size:.92rem;line-height:1.38}
-.como-cta{margin-top:18px}
-.como-cta .btn{width:100%}
+
 
 /* ---------- Paquetes ---------- */
 #paquetes{background:var(--crema)}
@@ -470,6 +469,12 @@ textarea.inp{min-height:96px;resize:vertical}
 /* ---------- Cierre ---------- */
 .cierre{background:var(--papel);padding:70px 0 74px;overflow:hidden;text-align:center}
 .cierre .wrap{position:relative;z-index:1}
+.contacto{max-width:440px;margin:0 auto 26px;text-align:left;background:var(--s-aqua);border-radius:var(--r-xl);padding:20px 18px 18px;box-shadow:inset 0 0 0 2px var(--turquesa)}
+.contacto h3{font-size:1.4rem;margin-bottom:4px}
+.contacto .c-sub{color:var(--ink-2);font-weight:600;margin-bottom:14px}
+.contacto .campo{margin-top:12px}
+.contacto .btn{width:100%;margin-top:16px}
+.contacto .c-ayuda{margin-top:10px;font-size:.85rem;font-weight:700;color:var(--ink-2);text-align:center}
 .logo-g{width:170px;height:170px;margin:0 auto 14px;border-radius:50%;background:#fff;box-shadow:0 0 0 6px var(--papel),0 0 0 7.5px var(--dorado),var(--sombra)}
 .logo-g img{width:100%;height:100%;border-radius:50%}
 .cierre h2{margin-bottom:.2rem}
@@ -567,7 +572,6 @@ body.tb-on .burbuja{display:none}
   #como{padding:52px 0 54px}
   .pasos{grid-template-columns:repeat(3,1fr);gap:14px}
   .paso{padding:14px 16px 16px 64px}
-  .como-cta .btn{width:auto}
   .tira-item{width:300px}
   .tira-track li{padding-right:16px}
   .paquetes{max-width:520px;margin-left:auto;margin-right:auto}
@@ -665,7 +669,6 @@ body.tb-on .burbuja{display:none}
     </nav>
     <div class="nav-acts">
       <a href="#inicio" class="ico-inicio" data-a="inicio" aria-label="Ir al inicio" title="Inicio"><svg aria-hidden="true"><use href="#ic-casa"/></svg></a>
-      <a href="#arma" class="btn btn-turquesa" data-a="cotizar">Cotizar</a>
     </div>
   </div>
 </header>
@@ -722,7 +725,6 @@ body.tb-on .burbuja{display:none}
         <p class="lead"><b>Tres pasos y tu cotización queda armada.</b></p>
       </div>
       <div class="pasos" id="pasos"></div>
-      <div class="como-cta reveal"><a href="#arma" class="btn btn-turquesa" data-a="cotizar">Cotizar mi evento<svg aria-hidden="true"><use href="#ic-flecha"/></svg></a></div>
     </div>
   </section>
 
@@ -833,6 +835,14 @@ body.tb-on .burbuja{display:none}
       <div class="logo-g"><img data-img="logo" alt="Logo de OBE! mix" width="170" height="170" loading="lazy"></div>
       <h2>¿Platicamos de <em>tu evento</em>?</h2>
       <p class="frase-script">Cotiza desde <span data-txt="minInv">20</span> personas</p>
+      <form class="contacto" id="formContacto" novalidate>
+        <h3>¿Prefieres que te atendamos directamente?</h3>
+        <p class="c-sub">Déjanos tu nombre y celular y en breve te contactamos.</p>
+        <label class="campo"><span class="l">Tu nombre</span><input class="inp" id="cNombre" type="text" autocomplete="name" maxlength="80" placeholder="Ej. Mariana López"></label>
+        <label class="campo"><span class="l">Tu celular</span><input class="inp" id="cTel" type="tel" inputmode="tel" autocomplete="tel" maxlength="20" placeholder="10 dígitos"></label>
+        <button type="submit" class="btn btn-rosa"><svg aria-hidden="true"><use href="#ic-wa"/></svg>Que me contacten</button>
+        <p class="c-ayuda">Se abre WhatsApp con tu mensaje listo; solo toca enviar.</p>
+      </form>
       <div class="redes" id="redesCierre"></div>
     </div>
   </section>
@@ -1783,7 +1793,7 @@ function renderSecciones(){
       "<h3><small>Hasta</small>" + p.hasta + "<small>invitados</small></h3>" +
       '<p class="precio"><b class="num">' + money(p.precio) + "</b><small>por evento</small></p>" +
       incl +
-      '<button type="button" class="btn ' + (p.etiqueta ? "btn-turquesa" : "btn-linea") + '" data-a="paquete" data-v="' + p.id + '">Cotizar mi evento</button>' +
+      '<button type="button" class="btn ' + (p.etiqueta ? "btn-turquesa" : "btn-linea") + '" data-a="paquete" data-v="' + p.id + '">Elegir este paquete</button>' +
     "</article>").join("") +
     '<article class="paq-mas reveal"><div><h3>¿Más de ' + MAX_PAQ + " invitados?</h3><p>Escríbenos y te damos precio especial.</p></div>" +
     '<a class="btn btn-rosa" href="' + esc(waLink(msgNegocio("¡Hola " + CONFIG.nombre + "! Quiero precio para un evento de más de " + MAX_PAQ + " invitados."))) + '" target="_blank" rel="noopener">' + ic("ic-wa") + "Pedir precio especial</a></article>";
@@ -2741,6 +2751,20 @@ function iniciarModo(){
   cargarCuest();
   iniciarBurbuja();
 }
+
+/* Formulario "Que me contacten": no hay servidor, así que arma el mensaje y abre WhatsApp hacia el negocio */
+document.addEventListener("input", e => { if (e.target.id === "cNombre" || e.target.id === "cTel") e.target.classList.remove("err"); });
+document.addEventListener("submit", e => {
+  if (e.target.id !== "formContacto") return;
+  e.preventDefault();
+  const fn = $("#cNombre"), ft = $("#cTel");
+  const nombre = fn.value.trim().replace(/\s+/g, " "), d = digitos(ft.value);
+  const telOk = d.length >= 10 && d.length <= 13;
+  if (nombre.length < 2) { fn.classList.add("err"); fn.focus(); toast("Dinos tu nombre para poder contactarte"); return; }
+  if (!telOk) { ft.classList.add("err"); ft.focus(); toast("Escribe tu celular a 10 dígitos"); return; }
+  abrirWA(msgNegocio("¡Hola " + CONFIG.nombre + "! Quiero que me contacten.\nNombre: " + nombre + "\nCelular: " + telCorto(d)));
+  toast("Se abrió WhatsApp: solo toca enviar y te contactamos ✓");
+});
 
 function iniciar(){
   pintarMarca();
