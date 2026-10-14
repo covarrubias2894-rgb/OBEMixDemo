@@ -1387,7 +1387,7 @@ const REGLAS = {
 
 /* precio: null = "Precio por confirmar" en pantalla, PDF y WhatsApp (no suma al total) */
 const EXTRAS = [
-  { id: "tiempo", nombre: "Tiempo adicional de servicio", detalle: "Se solicita con anticipación para contemplar más producto", cobro: "por hora", precio: null, max: 2 },  // POR CONFIRMAR precio
+  { id: "tiempo", nombre: "Tiempo adicional de servicio", detalle: "Se solicita con anticipación para contemplar más producto", cobro: "por hora", precio: 300, max: 2 },
   { id: "vasos",  nombre: "Vasos personalizados", detalle: "Envía la imagen que quieres que lleven, en el tiempo y tamaño establecido", cobro: "por evento", precio: 0, gratis: true,
     notaOn: "Cuando nos mandes tu cotización por WhatsApp, envíanos ahí la imagen para tus vasos." }  // sin costo extra (pedido por la clienta)
 ];
@@ -1487,7 +1487,7 @@ const PASOS = [
 const FAQ = [
   { q: "¿Desde cuántas personas cotizan?", a: "Desde " + REGLAS.minInvitados + " invitados. Tenemos paquetes para " + listaY(PAQUETES.map(p => p.hasta)) + "; si son más de " + MAX_PAQ + ", escríbenos y te damos precio especial." },
   { q: "¿Cómo elijo los snacks?", a: "Escoges " + REGLAS.productosPorBarra + " productos de nuestra lista, uno por charola. Si no sabes cuáles, usa “Al azar” y te armamos una mezcla balanceada." },
-  { q: "¿Cuánto tiempo dura el servicio?", a: REGLAS.horasIncluidas + " horas. Si necesitas más tiempo, pídelo con anticipación para contemplar más producto; tiene un costo extra." },
+  { q: "¿Cuánto tiempo dura el servicio?", a: REGLAS.horasIncluidas + " horas. Si necesitas más tiempo, pídelo con anticipación para contemplar más producto; cada hora extra cuesta $300." },
   { q: "¿Cómo aparto mi fecha?", a: "Con el " + REGLAS.anticipoPct + "% de anticipo. El otro " + (100 - REGLAS.anticipoPct) + "% se liquida " + REGLAS.liquidarHorasAntes + " horas antes de tu evento." },
   { q: "¿Pueden personalizar los vasos?", a: "Sí, sin costo extra. Solo envíanos la imagen que quieres que lleven tus vasos, en el tiempo y tamaño establecido." },
   { q: "¿Qué es el regalo al festejado?", a: "Un detalle de " + CONFIG.nombre + " para quien celebra." }   // POR CONFIRMAR qué es el regalo
@@ -1803,7 +1803,7 @@ function renderSecciones(){
 
   $("#incGrid").innerHTML = INCLUYE.map((t, i) => '<div class="inc reveal"><div class="ic">' + ic(INCLUYE_ICONOS[i] || "ic-check", "") + "</div><b>" + esc(t) + "</b></div>").join("") +
     '<div class="inc extra reveal"><div class="ic">' + ic("ic-vaso", "") + "</div><div><b>Extras</b><p>" +
-    esc("Tiempo adicional (con costo, se pide con anticipación). Vasos personalizados sin costo extra: envía la imagen que quieres que lleven, en el tiempo y tamaño establecido.") + "</p></div></div>";
+    esc("Tiempo adicional ($300 por hora, se pide con anticipación). Vasos personalizados sin costo extra: envía la imagen que quieres que lleven, en el tiempo y tamaño establecido.") + "</p></div></div>";
 
   $("#faq").innerHTML = FAQ.map(f => "<details><summary>" + esc(f.q) + "</summary><p>" + esc(f.a) + "</p></details>").join("");
 }
