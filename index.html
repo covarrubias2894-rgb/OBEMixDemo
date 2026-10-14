@@ -1504,7 +1504,7 @@ const TOPE_INVITADOS = 2000;   // solo para que el campo no acepte números absu
    3 · ESTADO — un solo objeto; render() repinta todo desde aquí
    ############################################################################ */
 function estadoBase(){
-  return { paso:1, maxPaso:1, evento:"", fecha:"", lugar:"", invitados:50, snacks:[], extras:{}, tema:"",
+  return { paso:1, maxPaso:1, evento:"", fecha:"", hora:"", lugar:"", invitados:50, snacks:[], extras:{}, tema:"",
            cliente:{ nombre:"", telefono:"", notas:"" } };
 }
 
@@ -1516,6 +1516,7 @@ function normalizarEstado(o){
   e.maxPaso = Math.max(e.paso, clampInt(o.maxPaso, 1, 3, 1));
   if (EVENTOS.indexOf(o.evento) >= 0) e.evento = o.evento;
   if (typeof o.fecha === "string" && /^\d{4}-\d{2}-\d{2}$/.test(o.fecha) && o.fecha >= fechaMinima()) e.fecha = o.fecha; // una fecha que ya venció se descarta
+  if (typeof o.hora === "string" && /^([01]\d|2[0-3]):[0-5]\d$/.test(o.hora)) e.hora = o.hora;
   e.lugar = String(o.lugar || "").slice(0, 120);
   e.invitados = limitarInvitados(o.invitados);
   if (Array.isArray(o.snacks)) o.snacks.forEach(id => {
@@ -1564,6 +1565,7 @@ const fechaCorta = d => pad2(d.getDate()) + "/" + pad2(d.getMonth() + 1) + "/" +
 const sumarDias = (d, n) => { const r = new Date(d.getTime()); r.setDate(r.getDate() + n); return r; };
 /* La fecha mínima se calcula con la hora local (toISOString usaría UTC y podría adelantar un día) */
 const fechaMinima = () => isoFecha(sumarDias(new Date(), REGLAS.anticipacionDias));
+const horaTexto = v => { const m = /^(\d{2}):(\d{2})$/.exec(v || ""); if (!m) return ""; const h = +m[1]; return ((h % 12) || 12) + ":" + m[2] + (h < 12 ? " a. m." : " p. m."); };
 const fechaTexto = v => { if (!v) return ""; const d = new Date(v + "T12:00:00"); return isNaN(d) ? "" : d.toLocaleDateString("es-MX", { day:"numeric", month:"long", year:"numeric" }); };
 const productoPorId = id => PRODUCTOS.find(p => p.id === id);
 const categoriaPorId = id => CATEGORIAS.find(c => c.id === id);
@@ -1647,7 +1649,7 @@ function calcular(est){
     snacks, nSnacks: snacks.length, faltan: Math.max(0, REGLAS.productosPorBarra - snacks.length), grupos,
     extras, extrasConPrecio, extrasPendientes, hayPendientes: extrasPendientes.length > 0,
     total, anticipo, resto: total == null ? null : total - anticipo,
-    evento: est.evento || "", fecha: est.fecha || "", fechaTexto: fechaTexto(est.fecha), lugar: String(est.lugar || "").trim(),
+    evento: est.evento || "", fecha: est.fecha || "", fechaTexto: fechaTexto(est.fecha), hora: est.hora || "", horaTxt: horaTexto(est.hora), lugar: String(est.lugar || "").trim(),
     cliente: { nombre:String(c.nombre || "").trim(), telefono:String(c.telefono || "").trim(), notas:String(c.notas || "").trim() },
     telefono: limpiarTel(c.telefono)
   };
@@ -1866,6 +1868,9 @@ function panel1(c){
     '<label class="campo"><span class="l">Fecha del evento <small>(opcional)</small></span>' +
       '<input class="inp" type="date" id="fFecha" min="' + fechaMinima() + '" value="' + esc(estado.fecha) + '" aria-describedby="ayFecha">' +
       '<p class="ayuda" id="ayFecha">Aparta con anticipación para asegurar tu fecha.</p></label>' +
+    '<label class="campo"><span class="l">Hora de inicio <small>(opcional)</small></span>' +
+      '<input class="inp" type="time" id="fHora" value="' + esc(estado.hora) + '">' +
+      '<p class="ayuda">Si aún no la sabes, la acordamos por WhatsApp.</p></label>' +
     '<label class="campo"><span class="l">Lugar o colonia del evento <small>(opcional)</small></span>' +
       '<input class="inp" type="text" id="fLugar" maxlength="120" autocomplete="off" placeholder="Ej. Salón Las Fuentes, Col. La Paz" value="' + esc(estado.lugar) + '" aria-describedby="ayLugar">' +
       '<p class="ayuda" id="ayLugar">Te confirmamos la cobertura por WhatsApp.</p></label>' +
@@ -1933,7 +1938,7 @@ function panel4(c){
 function ticketHTML(c){
   const hoy = fechaCorta(new Date()), tope = REGLAS.productosPorBarra;
   let h = '<div class="ticket"><div class="t-head"><span class="mk" aria-hidden="true"></span><div><b>' + esc(NEGOCIO.nombre) + "</b><small>Folio: se asigna al enviar · Emisión " + hoy + "</small></div></div>" +
-    '<div class="t-datos"><div><span>Evento</span>' + esc(c.evento || "Por definir") + "</div><div><span>Fecha</span>" + esc(c.fechaTexto || "Por definir") + "</div>" +
+    '<div class="t-datos"><div><span>Evento</span>' + esc(c.evento || "Por definir") + "</div><div><span>Fecha</span>" + esc((c.fechaTexto || "Por definir") + (c.horaTxt ? " · " + c.horaTxt : "")) + "</div>" +
     "<div><span>Lugar</span>" + esc(c.lugar || "Por definir") + "</div><div><span>Invitados</span>" + c.invitados + "</div></div>";
   // paquete
   h += '<div class="t-row"><div class="tt"><b>' + esc(paqueteTxt(c)) + "</b><small>" +
@@ -1979,7 +1984,7 @@ function claveFoco(el){
 function repintarConFoco(contenedor, pintar, saltar){
   const act = document.activeElement;
   let clave = "", ini = null, fin = null;
-  if (!saltar && act && contenedor.contains(act) && act.type !== "date") {   // nunca re-enfocar la fecha: reabre el selector del iPhone
+  if (!saltar && act && contenedor.contains(act) && act.type !== "date" && act.type !== "time") {   // nunca re-enfocar la fecha: reabre el selector del iPhone
     clave = claveFoco(act);
     try { ini = act.selectionStart; fin = act.selectionEnd; } catch (e) {}
   }
@@ -2277,6 +2282,7 @@ document.addEventListener("input", e => {
     const menos = $("[data-a='inv-']"); if (menos) menos.disabled = estado.invitados <= REGLAS.minInvitados;
     tocado = true; renderTotales(); guardarBorrador();
   }
+  else if (el.id === "fHora")   { estado.hora = /^\d{2}:\d{2}$/.test(el.value) ? el.value : ""; tocado = true; guardarBorrador(); }
   else if (el.id === "fLugar")  { estado.lugar = el.value; tocado = true; guardarBorrador(); }
   else if (el.id === "fTema")   { estado.tema = el.value; tocado = true; renderTotales(); guardarBorrador(); }
   else if (el.id === "fNombre") { estado.cliente.nombre = el.value; el.classList.remove("err"); tocado = true; guardarBorrador(); }
@@ -2374,7 +2380,7 @@ function construirPDF(c){
   doc.roundedRect(M, 59, CW, 33, 3, 3, "FD");
   const campos = [
     ["CLIENTE", c.cliente.nombre || "Por definir"], ["TELÉFONO", c.telefono ? telCorto(c.telefono) : "No indicado"],
-    ["EVENTO", c.evento || "Por definir"], ["FECHA DEL EVENTO", c.fechaTexto || "Por definir"],
+    ["EVENTO", c.evento || "Por definir"], [c.horaTxt ? "FECHA Y HORA" : "FECHA DEL EVENTO", (c.fechaTexto || "Por definir") + (c.horaTxt ? " · " + c.horaTxt : "")],
     ["LUGAR", c.lugar || "Por definir"], ["INVITADOS", String(c.invitados)]
   ];
   campos.forEach((f, i) => {
@@ -2522,6 +2528,7 @@ function mensajeWA(c){
   L.push("Nombre: " + (c.cliente.nombre || "Por definir"));
   if (c.telefono) L.push("Teléfono: " + telCorto(c.telefono));   // va dentro del texto: el mensaje se envía al negocio
   L.push("Evento: " + (c.evento || "Por definir") + " · " + (c.fechaTexto || "fecha por definir"));
+  if (c.horaTxt) L.push("Hora: " + c.horaTxt);
   if (c.lugar) L.push("Lugar: " + c.lugar);
   L.push("Invitados: " + c.invitados + " → " + (c.paquete ? "Paquete hasta " + c.paquete.hasta + ": " + money(c.paquete.precio) : "Más de " + MAX_PAQ + ": precio especial por confirmar"));
   L.push("");
