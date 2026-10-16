@@ -1347,8 +1347,8 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var r,n,i,a,
 const CONFIG = {
   modo: "final",                // "propuesta" = cinta + cuestionario de revisión | "final" = página limpia
   nombre: "OBE! mix",
-  whatsapp: "522228610165",     // confirmado por la clienta: aquí llegan las cotizaciones (222 861 0165)
-  whatsappAlterno: "522211870611",
+  whatsapp: "522216614142",     // número único del negocio (221 661 4142), dado por la clienta el 15 oct; aquí llegan las cotizaciones
+  whatsappAlterno: "",           // ya no hay segundo número
   instagram: "obemix.mx",
   facebook: "", tiktok: "",     // vacíos = se ocultan
   waNegoboost: "522221018655",  // a dónde llegan las respuestas del cuestionario
@@ -1574,7 +1574,7 @@ const limitarInvitados = n => clampInt(n, REGLAS.minInvitados, TOPE_INVITADOS, R
 const imagenes = () => (typeof IMG !== "undefined" && IMG) || {};
 const reducirMov = () => { try { return window.matchMedia("(prefers-reduced-motion: reduce)").matches; } catch (e) { return false; } };
 const plural = (n, uno, varios) => n + " " + (n === 1 ? uno : varios);
-/* Teléfono para mostrar: 221 187 0611 */
+/* Teléfono para mostrar: 221 661 4142 */
 function telCorto(n){ const d = digitos(n).slice(-10); return d.length === 10 ? d.slice(0,3) + " " + d.slice(3,6) + " " + d.slice(6) : d; }
 /* Teléfono del cliente: solo dígitos, y se antepone 52 si trae 10 */
 function limpiarTel(s){ let d = digitos(s); if (d.length === 10) d = "52" + d; return d; }
